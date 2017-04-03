@@ -1,4 +1,4 @@
-module my_sensor #(
+module sensor #(
   parameter MAX_SCL=24
 ) (
   input        clk,
@@ -6,7 +6,7 @@ module my_sensor #(
   output reg   scl,
   input        sda,
   output [7:0] data
-)
+);
 
 reg [4:0] bods;
 reg [1:0] state;
@@ -15,7 +15,7 @@ localparam main  = 2'b10;
 localparam quiet = 2'b11;
 
 always @(posedge clk) begin
-  case (state) begin
+  case(state)
     start: state <= main;
     main: begin
       if (bods == 5'd16) state <= quiet;
@@ -35,8 +35,8 @@ always @(posedge clk) begin
   else                    scl_div <= scl_div + 1'b1;
 end
 
+initial scl = 1'b0;
 always @(posedge clk) begin
-  if (rst)                scl <= 1'b0;
   if (scl_div == MAX_SCL) scl <= ~scl;
 end
 

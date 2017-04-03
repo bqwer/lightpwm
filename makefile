@@ -1,4 +1,4 @@
-PRJ     = light-pwm
+PRJ     = lightpwm
 TCL_DIR = ./scripts
 TMP_DIR = ./tmp
 RTL_DIR = ./rtl
@@ -20,20 +20,20 @@ all : setup
 
 setup : $(TMP_DIR)/$(PRJ).setup.done
 $(TMP_DIR)/$(PRJ).setup.done : $(RTL) $(XDC) $(IP_DONE)
-	cmd /c "vivado -mode batch -source ./setup_$(PRJ).tcl\
-	-log $(TMP_DIR)/setup_$(PRJ).log\
+	cmd /c "vivado -mode batch -source $(TCL_DIR)/setup_$(PRJ).tcl \
+	-log $(TMP_DIR)/setup_$(PRJ).log \
 	-jou $(TMP_DIR)/setup_$(PRJ).jou"
 
 ip : $(IP_DONE)
 $(IP_DONE) :
-	cmd /c "vivado -mode batch -source ./$(TCL_DIR)/$(basename $(basename $(notdir $@)))\
-	-log $(TMP_DIR)/$(basename $(basename $(basename $(notdir $@)))).log\
+	cmd /c "vivado -mode batch -source $(TCL_DIR)/$(basename $(basename $(notdir $@))) \
+	-log $(TMP_DIR)/$(basename $(basename $(basename $(notdir $@)))).log \
 	-jou $(TMP_DIR)/$(basename $(basename $(basename $(notdir $@)))).jou"
 
 compile : $(TMP_DIR)/$(PRJ).compile.done
 $(TMP_DIR)/$(PRJ).compile.done : $(TMP_DIR)/$(PRJ).setup.done
-	cmd /c "vivado -mode batch -source .$(TCL_DIR)/compile_$(PRJ).tcl\
-	-log $(TMP_DIR)/$(PRJ).compile.log\
+	cmd /c "vivado -mode batch -source $(TCL_DIR)/compile_$(PRJ).tcl \
+	-log $(TMP_DIR)/$(PRJ).compile.log \
 	-jou $(TMP_DIR)/$(PRJ).compile.jou"
 
 $(TMP_DIR)/sim_rtl.done : $(TMP_DIR)/sim_ip.done 
@@ -58,4 +58,4 @@ sim: $(TMP_DIR)/sim_ip.done $(TMP_DIR)/sim_rtl.done
 	(cd $(TMP_DIR) && xsim $(PRJ)_sim -t ../scripts/$(PRJ)/xsim_$(PRJ).tcl)
 
 clean :	
-	find $(TMP_DIR) -not -name "workdir" | xargs rm -rf
+	find $(TMP_DIR) -not -name "$(notdir $(TMP_DIR))" | xargs rm -rf

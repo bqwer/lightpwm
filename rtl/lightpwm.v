@@ -1,4 +1,4 @@
-module light-pwm(
+module lightpwm(
   // system
   input clk,
 
@@ -10,7 +10,7 @@ module light-pwm(
   // rgb-led
   output led0_r,
   output led0_g,
-  output led0_b,
+  output led0_b
 );
 
 wire [7:0] sensor_data;
@@ -20,7 +20,7 @@ sensor my_sensor (
   .scl(scl),
   .sda(sda),
   .data(sensor_data)
-)
+);
 
 filter my_filter(
 .clk         (clk),

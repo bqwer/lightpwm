@@ -1,8 +1,10 @@
-set project light-pwm
+set project lightpwm
 set tmpDir      "./tmp"
 set rtlDir      "./rtl"
+set xdcDir      "./xdc"
 set tbDir       "./tb"
 set ipDir       "./ip"
+set scriptsDir  "./scripts"
 set done_marker "$tmpDir/$project.setup.done"
 
 # Create project
@@ -32,10 +34,10 @@ foreach f $data {
 }
 
 # https://raw.githubusercontent.com/Digilent/Arty/master/Resources/XDC/Arty_Master.xdc
-add_files -norecurse -fileset constrs_1 ./Arty_Master.xdc
+add_files -norecurse -fileset constrs_1 $xdcDir/arty.xdc
 
 # Get IP list
-set ip_list [glob -d . ip_*.tcl]
+set ip_list [glob -nocomplain -directory $scriptsDir ip_*.tcl]
 foreach ip $ip_list {
   set splitname [split $ip _]
   set basename [lindex $splitname 1]
