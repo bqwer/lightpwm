@@ -1,9 +1,11 @@
-module (
+module my_sensor #(
+  parameter MAX_SCL=24
+) (
   input        clk,
   output reg   ncs,
   output reg   scl,
-  input        sda
-  output [7:0] data,
+  input        sda,
+  output [7:0] data
 )
 
 reg [4:0] bods;

@@ -1,6 +1,5 @@
 module pwm (
   input       clk,
-  input       en,
   input [7:0] pulse_width,
   output      pulse);
 
@@ -12,7 +11,7 @@ wire period_ok = !(pulse_max || pulse_min);
 reg  pulse_reg;
 
 always @(posedge clk) begin
-  if (en & period_ok) main_count <= main_count + 1'b1;
+  if (period_ok) main_count <= main_count + 1'b1;
 
   if   (main_count == pulse_width) pulse_reg <= 1'b0;
   else (main_count == 8'hFF)       pulse_reg <= 1'b1;
