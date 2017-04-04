@@ -8,9 +8,9 @@ module lightpwm(
   input  sensor_sda,
   
   // rgb-led
-  output led0_r,
-  output led0_g,
-  output led0_b
+  output led_r,
+  output led_g,
+  output led_b
 );
 
 wire [7:0] sensor_data;
@@ -22,13 +22,13 @@ sensor my_sensor (
   .data(sensor_data)
 );
 
+wire [7:0] light_intensity;
 filter my_filter(
 .clk         (clk),
 .sensor_data (sensor_data),
 .mean_data   (light_intensity)
 );
 
-wire [7:0] light_intensity;
 wire [7:0] red_intensity;
 wire [7:0] green_intensity;
 wire [7:0] blue_intensity;
@@ -42,19 +42,19 @@ color my_color(
 pwm red_pwm(
   .clk(clk),
   .pulse_width(red_intensity),
-  .pulse(led0_r)
+  .pulse(led_r)
 );
 
-pwm red_pwm(
+pwm green_pwm(
   .clk(clk),
   .pulse_width(green_intensity),
-  .pulse(led0_g)
+  .pulse(led_g)
 );
 
-pwm red_pwm(
+pwm blue_pwm(
   .clk(clk),
   .pulse_width(blue_intensity),
-  .pulse(led0_b)
+  .pulse(led_b)
 );
 
 endmodule

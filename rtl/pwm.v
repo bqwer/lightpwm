@@ -6,6 +6,7 @@ module pwm (
 reg [7:0] main_count;
 
 wire pulse_max = (pulse_width == 8'hFF);
+wire pulse_min = (pulse_width == 8'h00);
 wire period_ok = !(pulse_max || pulse_min);
 reg  pulse_reg;
 
