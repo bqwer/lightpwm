@@ -3,9 +3,12 @@ module lightpwm(
   input clk,
 
   // sensor
-  output sensor_ncs,
-  output sensor_scl,
-  input  sensor_sda,
+  output ncs,
+  output sck,
+  input  sdo,
+  
+  output [3:0] dbg_led,
+  input        dbg_sw,
   
   // rgb-led
   output led_r,
@@ -17,8 +20,8 @@ wire [7:0] sensor_data;
 sensor my_sensor (
   .clk(clk),
   .ncs(ncs),
-  .scl(scl),
-  .sda(sda),
+  .sck(sck),
+  .sdo(sdo),
   .data(sensor_data)
 );
 
@@ -28,6 +31,9 @@ filter my_filter(
 .sensor_data (sensor_data),
 .mean_data   (light_intensity)
 );
+
+assign dbg_led = dbg_sw? sensor_data[7:4] :
+                         sensor_data[3:0];
 
 wire [7:0] red_intensity;
 wire [7:0] green_intensity;
