@@ -6,9 +6,9 @@ module color (
   output [7:0] blue_pwm
 );
 
-assign red_pwm = light_intensity;
-assign green_pwm = 8'h00;// - light_intensity;
-assign blue_pwm = 8'h00;// + light_intensity;
+assign red_pwm = 8'h80 - light_intensity >> 2;
+assign green_pwm = light_intensity;
+assign blue_pwm = light_intensity >> 1;
 
 endmodule
 
