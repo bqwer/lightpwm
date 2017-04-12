@@ -1,3 +1,4 @@
+`timescale 1ns/1ps
 module sensor #(
   parameter MAX_SCL=24
 ) (

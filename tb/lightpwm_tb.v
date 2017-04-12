@@ -1,6 +1,8 @@
 `timescale 1ns/1ps
 module lightpwm_tb();
 
+`define SIM
+
 reg clk;
 wire sck, ncs, sdo;
 wire led_r,led_g,led_b;

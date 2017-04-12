@@ -1,3 +1,4 @@
+`timescale 1ns/1ps
 module color (
   input  [7:0] light_intensity,
 

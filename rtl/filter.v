@@ -1,3 +1,4 @@
+`timescale 1ns/1ps
 module filter (
   input        clk,
   input  [7:0] sensor_data,

@@ -1,3 +1,4 @@
+`timescale 1ns/1ps
 module lightpwm(
   // system
   input clk,
@@ -7,13 +8,17 @@ module lightpwm(
   output sck,
   input  sdo,
   
-  output [3:0] dbg_led,
-  input        dbg_sw,
   
   // rgb-led
   output led_r,
   output led_g,
   output led_b
+
+  `ifdef SIM
+  ,output [3:0] dbg_led,
+  ,output [7:0] dbg_data
+  ,input        dbg_sw,
+  `endif
 );
 
 wire [7:0] sensor_data;
@@ -32,8 +37,6 @@ filter my_filter(
 .mean_data   (light_intensity)
 );
 
-assign dbg_led = dbg_sw? sensor_data[7:4] :
-                         sensor_data[3:0];
 
 wire [7:0] red_intensity;
 wire [7:0] green_intensity;
@@ -62,6 +65,12 @@ pwm blue_pwm(
   .pulse_width(blue_intensity),
   .pulse(led_b)
 );
+
+`ifdef SIM
+assign dbg_data = sensor_data;
+assign dbg_led = dbg_sw? sensor_data[7:4] :
+                         sensor_data[3:0];
+`endif
 
 endmodule
 
