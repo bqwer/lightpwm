@@ -4,7 +4,7 @@ PRJ     = $(current_dir)
 TCL_DIR = ./scripts
 IP_DIR  = ./ip
 TMP_DIR = ./tmp
-TMP_IP_DIR  = .tmp/ip
+TMP_IP_DIR = .tmp/ip
 RTL_DIR = ./rtl
 TB_DIR  = ./tb
 XDC_DIR = ./xdc
@@ -61,11 +61,13 @@ $(TMP_DIR)/sim_rtl.done : $(TMP_DIR)/sim_ip.done
 # some IPs have both projects others have only one
 ipsim : $(TMP_DIR)/sim_ip.done
 $(TMP_DIR)/sim_ip.done: $(IP_DONE)
+	@echo "HERE!!!"
+	@echo $(subst $(notdir $(TMP_DIR)),.,$(subst ../,,$(wildcard $(TMP_IP_DIR)/$(ipname)_sim/xsim/vlog.prj)))
 	$(foreach ipname, $(IP_NAMES),\
-	 	$(if $(wildcard $(TMP_DIR)/ip/$(ipname)_sim/xsim/vlog.prj),\
+	 	$(if $(wildcard $(TMP_IP_DIR)/$(ipname)_sim/xsim/vlog.prj),\
 		(cd $(TMP_DIR) && xvlog -prj $(subst $(notdir $(TMP_DIR)),.,$(subst ../,,$(wildcard $(TMP_IP_DIR)/$(ipname)_sim/xsim/vlog.prj))));))
 	$(foreach ipname, $(IP_NAMES),\
-	 	$(if $(wildcard $(TMP_DIR)/ip/$(ipname)_sim/xsim/vhdl.prj),\
+	 	$(if $(wildcard $(TMP_IP_DIR)/$(ipname)_sim/xsim/vhdl.prj),\
 		(cd $(TMP_DIR) && xvhdl -prj $(subst $(notdir $(TMP_DIR)),.,$(subst ../,,$(wildcard $(TMP_IP_DIR)/$(ipname)_sim/xsim/vhdl.prj))));))
 	touch $(TMP_DIR)/sim_ip.done
 	
