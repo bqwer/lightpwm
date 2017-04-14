@@ -61,8 +61,6 @@ $(TMP_DIR)/sim_rtl.done : $(TMP_DIR)/sim_ip.done
 # some IPs have both projects others have only one
 ipsim : $(TMP_DIR)/sim_ip.done
 $(TMP_DIR)/sim_ip.done: $(IP_DONE)
-	@echo "HERE!!!"
-	@echo $(subst $(notdir $(TMP_DIR)),.,$(subst ../,,$(wildcard $(TMP_IP_DIR)/$(ipname)_sim/xsim/vlog.prj)))
 	$(foreach ipname, $(IP_NAMES),\
 	 	$(if $(wildcard $(TMP_IP_DIR)/$(ipname)_sim/xsim/vlog.prj),\
 		(cd $(TMP_DIR) && xvlog -prj $(subst $(notdir $(TMP_DIR)),.,$(subst ../,,$(wildcard $(TMP_IP_DIR)/$(ipname)_sim/xsim/vlog.prj))));))
