@@ -1,11 +1,11 @@
-set project lightpwm
-set tmpDir      "./tmp"
-set rtlDir      "./rtl"
-set xdcDir      "./xdc"
-set tbDir       "./tb"
-set ipDir       "./ip"
-set scriptsDir  "./scripts"
-set done_marker "$tmpDir/$project.setup.done"
+set tmpDir       "./tmp"
+set rtlDir       "./rtl"
+set xdcDir       "./xdc"
+set tbDir        "./tb"
+set ipDir        "$tmpDir/ip"
+set scriptsDir   "./scripts"
+set ipScriptsDir "./ip"
+set done_marker  "$tmpDir/$project.setup.done"
 
 # Create project
 create_project -force $project $tmpDir -part xc7a35ticsg324-1L
@@ -37,11 +37,10 @@ foreach f $data {
 add_files -norecurse -fileset constrs_1 $xdcDir/arty.xdc
 
 # Get IP list
-set ip_list [glob -nocomplain -directory $scriptsDir ip_*.tcl]
+set ip_list [glob -nocomplain -directory $ipScriptsDir *.tcl]
 foreach ip $ip_list {
-  set splitname [split $ip _]
-  set basename [lindex $splitname 1]
-  add_files -norecurse -fileset sources_1 $ipDir/$basename/$basename.xci
+  set ipname [file rootname [file tail $ip]]
+  add_files -norecurse -fileset sources_1 $ipDir/$ipname/$ipname.xci
 }
 
 set_property top $project [get_filesets sources_1]

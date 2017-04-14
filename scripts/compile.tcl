@@ -1,5 +1,3 @@
-# get the directory where this script resides
-set project light-pwm
 set tmpDir "./tmp"
 set marker "$tmpDir/$project.compile.done"
 
