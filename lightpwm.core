@@ -1,0 +1,28 @@
+CAPI=1
+[main]
+name = ::lightpwm:0
+backend = vivado
+
+[fileset rtl]
+files =
+  rtl/lightpwm.v
+  rtl/color.v
+  rtl/filter.v
+  rtl/pwm.v
+  rtl/sensor.v
+file_type=verilogSource
+
+[fileset tb]
+files = tb/lightpwm_tb.v
+file_type = verilogSource
+scope = private
+usage = sim
+
+[fileset constraints]
+usage = vivado
+file_type = xdc
+files = xdc/arty.xdc
+
+[simulator]
+toplevel = lightpwm_tb
+
