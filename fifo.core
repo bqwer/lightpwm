@@ -1,9 +1,0 @@
-CAPI=1
-[main]
-name = ::fifo:0
-
-[fileset xci]
-usage = vivado
-file_type = xci
-files = ip/fifo.xci 
-

@@ -1,7 +1,9 @@
 CAPI=1
 [main]
-name = ::lightpwm:0
+name = lightpwm
+description="Lightpwm project for Arty board"
 backend = vivado
+simulators = icarus
 
 [fileset rtl]
 files =
@@ -18,6 +20,11 @@ file_type = verilogSource
 scope = private
 usage = sim
 
+[fileset xci]
+usage = vivado
+file_type = xci
+files = ip/fifo.xci
+
 [fileset constraints]
 usage = vivado
 file_type = xdc
@@ -26,3 +33,10 @@ files = xdc/arty.xdc
 [simulator]
 toplevel = lightpwm_tb
 
+[icarus]
+iverilog_options = -W all
+
+[vivado]
+part = "xc7a35tcsg324-1"
+hw_device = xc7a35t_0
+top_module = lightpwm
