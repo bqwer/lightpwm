@@ -3,7 +3,7 @@ CAPI=1
 name = lightpwm
 description="Lightpwm project for Arty board"
 backend = vivado
-simulators = icarus
+simulators = xsim
 
 [fileset rtl]
 files =
@@ -21,9 +21,8 @@ scope = private
 usage = sim
 
 [fileset xci]
-usage = vivado
 file_type = xci
-files = ip/fifo.xci
+files = ip/fifo/fifo.xci
 
 [fileset constraints]
 usage = vivado
@@ -32,9 +31,6 @@ files = xdc/arty.xdc
 
 [simulator]
 toplevel = lightpwm_tb
-
-[icarus]
-iverilog_options = -W all
 
 [vivado]
 part = "xc7a35tcsg324-1"

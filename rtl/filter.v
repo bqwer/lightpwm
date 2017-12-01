@@ -5,7 +5,7 @@ module filter (
   output [7:0] mean_data
 );
 
-reg [15:0] filter;
+reg [15:0] filter = 16'h0000;
 assign mean_data = filter[15:9];
 always @(posedge clk) begin
   if      (sensor_data > mean_data) filter <= filter + 1'b1;

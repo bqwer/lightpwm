@@ -17,6 +17,13 @@ lightpwm uut (
 );
 
 initial begin
+  $dumpfile("lightpwm.vcd");
+  $dumpvars;
+  #10000
+  $finish;
+end
+
+initial begin
   clk = 0;
   forever #1 clk <= ~clk;
 end
